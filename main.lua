@@ -19,6 +19,10 @@ function evaluate_play_final_scoring(text, disp_text, poker_hands, scoring_hand,
         hand_chips = hand_chips + (mult - 1)
     end
 
+    if (nmm.config.square) then
+        hand_chips = hand_chips ^ 2
+    end
+
 	mult = 1
 	fakeeval(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
 end
@@ -27,9 +31,11 @@ local hudcopy = create_UIBox_HUD
 function create_UIBox_HUD(force)
 	local res = hudcopy()
 
+    local s = nmm.config.square and 1 or 0
+
     res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[2].nodes[1].config.minw = 4
     res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[2].nodes[2] = {n=G.UIT.C, config={align = "cm"}, nodes={
-		{n=G.UIT.T, config={id = "chipmult_op", text = "no", lang = G.LANGUAGES['en-us'], scale = 0, colour = G.C.WHITE, shadow = true}},
+		{n=G.UIT.T, config={id = "chipmult_op", text = "^2", lang = G.LANGUAGES['en-us'], scale = s, colour = G.C.WHITE, shadow = true}},
 	}}
 
 	res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[2].nodes[3] = {n=G.UIT.C, config={align = "cl", minw = 0, minh=0, r = 0,colour = G.C.BLACK, id = 'hand_mult_area', emboss = 0.05}, nodes={
@@ -67,6 +73,17 @@ nmm.config_tab = function()
                                 active_colour = G.C.GREEN, -- the color of the toggle when it is on
                                 ref_table = nmm.config, -- the table of which the toggle refrerences to check if it is on or off
                                 ref_value = "convert" -- the value from the ref_table that the toggle will change when pressed
+                            }
+                        },
+                    },
+                    {n = G.UIT.C, config = { minw = G.ROOM.T.w*0.125, padding = 0.05 }, 
+                        nodes = {
+                            create_toggle{
+                                label = "Square chips", -- the label that shows up next to the toggle button
+                                info = {"Readds the X from chips X mult, but changes it to ^2", "Makes the mod very bearable."}, -- the text that will show below the toggle option
+                                active_colour = G.C.GREEN, -- the color of the toggle when it is on
+                                ref_table = nmm.config, -- the table of which the toggle refrerences to check if it is on or off
+                                ref_value = "square" -- the value from the ref_table that the toggle will change when pressed
                             }
                         },
                     },
