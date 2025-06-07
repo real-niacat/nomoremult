@@ -1,0 +1,14 @@
+{
+	"id": "nomoremult",
+	"name": "NoMoreMult", 
+	"author": ["Lily"], 
+	"description": "it just fucking removes mult",
+	"prefix": "nmm",
+	"main_file": "main.lua",
+	"priority": 0, 
+	"badge_colour": "000000",
+	"version": "1.0.0", 
+	"dependencies": [
+        
+	], 
+}
